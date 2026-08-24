@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta name="description" content="Créez une clé EFI OpenCore de secours depuis macOS Recovery, sans autre Mac.">
+  <meta property="og:title" content="OpenCore Rescue">
+  <meta property="og:description" content="Créez une clé EFI de secours depuis macOS Recovery.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oc-rescue.github.io/">
+  <meta property="og:image" content="https://oc-rescue.github.io/og.png">
+  <title>OpenCore Rescue</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="OpenCore Rescue, accueil">
+        <span class="brand-mark" aria-hidden="true">OR</span>
+        <span>OpenCore Rescue</span>
+      </a>
+      <div class="status-pill"><span aria-hidden="true"></span> MVP · MacBook Pro 2012</div>
+    </header>
+
+    <section class="workspace" id="top">
+      <div class="intro">
+        <p class="eyebrow">OUTIL DE RÉCUPÉRATION</p>
+        <h1>Refaites une clé OpenCore.<br><span>Sans autre Mac.</span></h1>
+        <p class="lede">Depuis Safari de macOS Recovery, préparez une clé EFI de secours avec les composants officiels d’OpenCore Legacy Patcher.</p>
+        <div class="trust-row" aria-label="Garanties de sécurité">
+          <span><b>01</b> Modèle détecté</span>
+          <span><b>02</b> Disques externes seuls</span>
+          <span><b>03</b> Double confirmation</span>
+        </div>
+      </div>
+
+      <div class="builder-card">
+        <div class="card-heading">
+          <div>
+            <p class="step-label">PRÉPARER LA COMMANDE</p>
+            <h2>Clé EFI de secours</h2>
+          </div>
+          <span class="version">OCLP 2.4.1</span>
+        </div>
+
+        <label class="field-label" for="model">Modèle cible</label>
+        <div class="select-wrap">
+          <select id="model">
+            <option value="auto">Détection automatique — Recommandé</option>
+            <option value="MacBookPro9,1">MacBook Pro 15&quot; mi-2012 — Non-Retina</option>
+            <option value="MacBookPro9,2">MacBook Pro 13&quot; mi-2012 — Non-Retina</option>
+            <option value="MacBookPro10,1">MacBook Pro 15&quot; 2012 — Retina</option>
+            <option value="MacBookPro10,2">MacBook Pro 13&quot; fin-2012 — Retina</option>
+          </select>
+        </div>
+
+        <div class="notice">
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <p>Une <strong>deuxième clé USB de 4 Go minimum</strong> est nécessaire. Son contenu sera effacé et environ 736 Mo seront téléchargés. Ne sélectionnez jamais la clé qui contient l’installateur macOS Recovery.</p>
+        </div>
+
+        <label class="consent">
+          <input id="acknowledged" type="checkbox">
+          <span>J’ai identifié la clé USB qui peut être effacée.</span>
+        </label>
+
+        <div class="command-box" aria-label="Commande Terminal">
+          <code id="command">Préparation de la commande…</code>
+          <button id="copy-button" type="button" disabled>Copier</button>
+        </div>
+        <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
+
+        <ol class="micro-steps">
+          <li><span>1</span> Ouvrez <b>Utilitaires → Terminal</b></li>
+          <li><span>2</span> Collez la commande puis appuyez sur Entrée</li>
+          <li><span>3</span> Suivez la sélection sécurisée de la clé</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="explain" aria-labelledby="how-title">
+      <div>
+        <p class="eyebrow">CE QUE FAIT L’OUTIL</p>
+        <h2 id="how-title">Un chemin court jusqu’au redémarrage.</h2>
+      </div>
+      <div class="flow-grid">
+        <article><span>01</span><h3>Inspecte</h3><p>Identifie le modèle réel et affiche uniquement les supports USB externes.</p></article>
+        <article><span>02</span><h3>Construit</h3><p>Télécharge le paquet officiel OCLP, vérifie sa signature SHA-256 et génère l’EFI adaptée.</p></article>
+        <article><span>03</span><h3>Installe</h3><p>Monte la partition système EFI de la clé et vérifie la présence du chargeur.</p></article>
+        <article><span>04</span><h3>Redémarre</h3><p>Maintenez Option, choisissez EFI Boot, puis votre macOS interne.</p></article>
+      </div>
+    </section>
+
+    <section class="limits">
+      <div class="limits-title"><span>i</span><h2>À savoir avant de commencer</h2></div>
+      <ul>
+        <li>Cette version crée une EFI de secours, pas un installateur macOS complet.</li>
+        <li>Elle n’écrit jamais automatiquement sur le disque interne.</li>
+        <li>Elle prend en charge les MacBook Pro 2012 identifiés MacBookPro9,1, 9,2, 10,1 et 10,2.</li>
+        <li>Après démarrage, reconstruisez OpenCore avec OCLP directement sur le disque interne.</li>
+        <li>Projet indépendant, non affilié à Apple ni à Dortania.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>OpenCore Rescue · GPL-3.0</span>
+      <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/" target="_blank" rel="noreferrer">Documentation officielle Dortania ↗</a>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
