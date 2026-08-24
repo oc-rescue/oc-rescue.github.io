@@ -6,107 +6,124 @@
   <meta name="theme-color" content="#0b0d0c">
   <meta name="description" content="Créez une clé EFI OpenCore de secours depuis macOS Recovery, sans autre Mac.">
   <meta property="og:title" content="OpenCore Rescue">
-  <meta property="og:description" content="Créez une clé EFI de secours depuis macOS Recovery.">
+  <meta property="og:description" content="Create an OpenCore rescue EFI from macOS Recovery.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://oc-rescue.github.io/">
   <meta property="og:image" content="https://oc-rescue.github.io/og.png">
   <title>OpenCore Rescue</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script src="data/catalog.js"></script>
 </head>
 <body>
   <main class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="OpenCore Rescue, accueil">
+      <a class="brand" href="#top" aria-label="OpenCore Rescue">
         <span class="brand-mark" aria-hidden="true">OR</span>
         <span>OpenCore Rescue</span>
       </a>
-      <div class="status-pill"><span aria-hidden="true"></span> MVP · MacBook Pro 2012</div>
+      <div class="top-actions">
+        <div id="catalog-status" class="status-pill"><span aria-hidden="true"></span><span id="catalog-status-text">OCLP</span></div>
+        <div class="language-switch" role="group" aria-label="Langue / Language">
+          <svg class="language-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18M12 3c2.5 2.5 3.7 5.5 3.7 9s-1.2 6.5-3.7 9M12 3c-2.5 2.5-3.7 5.5-3.7 9s1.2 6.5 3.7 9"></path>
+          </svg>
+          <button type="button" data-language="fr" aria-pressed="true">FR</button>
+          <span aria-hidden="true">/</span>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
     </header>
 
     <section class="workspace" id="top">
       <div class="intro">
-        <p class="eyebrow">OUTIL DE RÉCUPÉRATION</p>
-        <h1>Refaites une clé OpenCore.<br><span>Sans autre Mac.</span></h1>
-        <p class="lede">Depuis Safari de macOS Recovery, préparez une clé EFI de secours avec les composants officiels d’OpenCore Legacy Patcher.</p>
-        <div class="trust-row" aria-label="Garanties de sécurité">
-          <span><b>01</b> Modèle détecté</span>
-          <span><b>02</b> Disques externes seuls</span>
-          <span><b>03</b> Double confirmation</span>
+        <p class="eyebrow" data-i18n="eyebrow">OUTIL DE RÉCUPÉRATION</p>
+        <h1><span data-i18n="headline1">Refaites une clé OpenCore.</span><br><span class="muted-headline" data-i18n="headline2">Sans autre Mac.</span></h1>
+        <p class="lede" data-i18n="lede">Depuis Safari de macOS Recovery, préparez une clé EFI de secours avec les composants officiels d’OpenCore Legacy Patcher.</p>
+        <div class="trust-row" aria-label="Sécurité" data-i18n-aria="securityLabel">
+          <span><b>01</b> <span data-i18n="trustDetect">Modèle détecté</span></span>
+          <span><b>02</b> <span data-i18n="trustExternal">Disques externes seuls</span></span>
+          <span><b>03</b> <span data-i18n="trustConfirm">Double confirmation</span></span>
+          <span><b>04</b> <span data-i18n="trustVerified">Téléchargement vérifié</span></span>
         </div>
       </div>
 
       <div class="builder-card">
         <div class="card-heading">
           <div>
-            <p class="step-label">PRÉPARER LA COMMANDE</p>
-            <h2>Clé EFI de secours</h2>
+            <p class="step-label" data-i18n="prepareLabel">PRÉPARER LA COMMANDE</p>
+            <h2 data-i18n="cardTitle">Clé EFI de secours</h2>
           </div>
-          <span class="version">OCLP 2.4.1</span>
+          <span id="version-badge" class="version">OCLP</span>
         </div>
 
-        <label class="field-label" for="model">Modèle cible</label>
+        <label class="field-label" for="model-search" data-i18n="searchLabel">Rechercher votre Mac</label>
+        <input id="model-search" class="model-search" type="search" autocomplete="off" placeholder="Ex. MacBookPro9,2 ou mi-2012" data-i18n-placeholder="searchPlaceholder">
+
+        <label class="field-label model-label" for="model" data-i18n="modelLabel">Modèle cible</label>
         <div class="select-wrap">
-          <select id="model">
-            <option value="auto">Détection automatique — Recommandé</option>
-            <option value="MacBookPro9,1">MacBook Pro 15&quot; mi-2012 — Non-Retina</option>
-            <option value="MacBookPro9,2">MacBook Pro 13&quot; mi-2012 — Non-Retina</option>
-            <option value="MacBookPro10,1">MacBook Pro 15&quot; 2012 — Retina</option>
-            <option value="MacBookPro10,2">MacBook Pro 13&quot; fin-2012 — Retina</option>
-          </select>
+          <select id="model"></select>
         </div>
+        <p class="model-help" data-i18n="modelHelp">En cas de doute, gardez la détection automatique : le script lira directement l’identifiant matériel du Mac.</p>
 
         <div class="notice">
           <span class="notice-icon" aria-hidden="true">!</span>
-          <p>Une <strong>deuxième clé USB de 4 Go minimum</strong> est nécessaire. Son contenu sera effacé et environ 736 Mo seront téléchargés. Ne sélectionnez jamais la clé qui contient l’installateur macOS Recovery.</p>
+          <p data-i18n-html="notice">Une <strong>deuxième clé USB de 4 Go minimum</strong> est nécessaire. Son contenu sera effacé. Ne sélectionnez jamais la clé contenant macOS Recovery.</p>
         </div>
 
         <label class="consent">
           <input id="acknowledged" type="checkbox">
-          <span>J’ai identifié la clé USB qui peut être effacée.</span>
+          <span data-i18n="consent">J’ai identifié la clé USB qui peut être effacée.</span>
         </label>
 
-        <div class="command-box" aria-label="Commande Terminal">
+        <div class="command-box" aria-label="Commande Terminal" data-i18n-aria="commandLabel">
           <code id="command">Préparation de la commande…</code>
-          <button id="copy-button" type="button" disabled>Copier</button>
+          <button id="copy-button" type="button" disabled data-i18n="copy">Copier</button>
         </div>
         <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
 
         <ol class="micro-steps">
-          <li><span>1</span> Ouvrez <b>Utilitaires → Terminal</b></li>
-          <li><span>2</span> Collez la commande puis appuyez sur Entrée</li>
-          <li><span>3</span> Suivez la sélection sécurisée de la clé</li>
+          <li><span>1</span> <span data-i18n-html="step1">Ouvrez <b>Utilitaires → Terminal</b></span></li>
+          <li><span>2</span> <span data-i18n="step2">Collez la commande puis appuyez sur Entrée</span></li>
+          <li><span>3</span> <span data-i18n="step3">Suivez la sélection sécurisée de la clé</span></li>
         </ol>
       </div>
     </section>
 
+    <section class="catalog-strip" aria-live="polite">
+      <div><span class="catalog-number" id="model-count">83</span><span data-i18n="supportedModels">modèles Mac pris en charge</span></div>
+      <div><span class="catalog-number" id="family-count">7</span><span data-i18n="macFamilies">familles de Mac</span></div>
+      <div><span class="catalog-number catalog-auto">↻</span><span data-i18n="autoCatalog">catalogue synchronisé avec OCLP</span></div>
+    </section>
+
     <section class="explain" aria-labelledby="how-title">
       <div>
-        <p class="eyebrow">CE QUE FAIT L’OUTIL</p>
-        <h2 id="how-title">Un chemin court jusqu’au redémarrage.</h2>
+        <p class="eyebrow" data-i18n="howEyebrow">CE QUE FAIT L’OUTIL</p>
+        <h2 id="how-title" data-i18n="howTitle">Un chemin court jusqu’au redémarrage.</h2>
       </div>
       <div class="flow-grid">
-        <article><span>01</span><h3>Inspecte</h3><p>Identifie le modèle réel et affiche uniquement les supports USB externes.</p></article>
-        <article><span>02</span><h3>Construit</h3><p>Télécharge le paquet officiel OCLP, vérifie sa signature SHA-256 et génère l’EFI adaptée.</p></article>
-        <article><span>03</span><h3>Installe</h3><p>Monte la partition système EFI de la clé et vérifie la présence du chargeur.</p></article>
-        <article><span>04</span><h3>Redémarre</h3><p>Maintenez Option, choisissez EFI Boot, puis votre macOS interne.</p></article>
+        <article><span>01</span><h3 data-i18n="inspectTitle">Inspecte</h3><p data-i18n="inspectText">Identifie le modèle réel et affiche uniquement les supports externes.</p></article>
+        <article><span>02</span><h3 data-i18n="buildTitle">Construit</h3><p data-i18n="buildText">Télécharge la dernière version OCLP connue et génère l’EFI adaptée.</p></article>
+        <article><span>03</span><h3 data-i18n="installTitle">Installe</h3><p data-i18n="installText">Monte la partition système EFI et vérifie la présence du chargeur.</p></article>
+        <article><span>04</span><h3 data-i18n="restartTitle">Redémarre</h3><p data-i18n="restartText">Maintenez Option, choisissez EFI Boot, puis votre macOS interne.</p></article>
       </div>
     </section>
 
     <section class="limits">
-      <div class="limits-title"><span>i</span><h2>À savoir avant de commencer</h2></div>
+      <div class="limits-title"><span>i</span><h2 data-i18n="beforeTitle">À savoir avant de commencer</h2></div>
       <ul>
-        <li>Cette version crée une EFI de secours, pas un installateur macOS complet.</li>
-        <li>Elle n’écrit jamais automatiquement sur le disque interne.</li>
-        <li>Elle prend en charge les MacBook Pro 2012 identifiés MacBookPro9,1, 9,2, 10,1 et 10,2.</li>
-        <li>Après démarrage, reconstruisez OpenCore avec OCLP directement sur le disque interne.</li>
-        <li>Projet indépendant, non affilié à Apple ni à Dortania.</li>
+        <li data-i18n="limit1">Le site crée une EFI de secours, pas un installateur macOS complet.</li>
+        <li data-i18n="limit2">Le script ne sélectionne et ne modifie jamais automatiquement le disque interne.</li>
+        <li data-i18n="limit3">La liste des Mac et la version OCLP sont actualisées automatiquement depuis le projet officiel.</li>
+        <li data-i18n="limit4">Après démarrage, reconstruisez OpenCore sur le disque interne avec OCLP.</li>
+        <li data-i18n="limit5">Projet indépendant, non affilié à Apple ni à Dortania.</li>
       </ul>
     </section>
 
     <footer>
       <span>OpenCore Rescue · GPL-3.0</span>
-      <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/" target="_blank" rel="noreferrer">Documentation officielle Dortania ↗</a>
+      <a href="https://dortania.github.io/OpenCore-Legacy-Patcher/" target="_blank" rel="noreferrer" data-i18n="docs">Documentation officielle Dortania ↗</a>
     </footer>
   </main>
   <script src="app.js"></script>

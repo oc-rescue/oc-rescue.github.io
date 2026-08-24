@@ -1,26 +1,54 @@
 # OpenCore Rescue
 
-Site statique GitHub Pages permettant de préparer une clé EFI OpenCore de secours depuis Safari dans macOS Recovery.
+[Français](#français) · [English](#english)
 
-## Publication
+## Français
 
-1. Envoyer tous les fichiers de ce dossier à la racine du dépôt `oc-rescue/oc-rescue.github.io`.
-2. Ouvrir **Settings → Pages**.
-3. Choisir **Deploy from a branch**, branche **main**, dossier **/(root)**.
-4. Le site sera publié sur <https://oc-rescue.github.io/>.
+Site statique GitHub Pages pour préparer une clé EFI OpenCore de secours depuis Safari dans macOS Recovery.
 
-## Sécurité
+### Publication
 
-- `ocrescue.sh` ne propose que les disques externes physiques.
-- Le disque choisi n'est effacé qu'après une confirmation contenant son identifiant.
-- Le paquet officiel OCLP 2.4.1 est vérifié avec son empreinte SHA-256 avant exécution.
-- Le script ne sélectionne et ne modifie jamais automatiquement le disque interne.
+1. Envoyez **tout le contenu** de ce dossier à la racine de `oc-rescue/oc-rescue.github.io`.
+2. Dans **Settings → Pages**, choisissez **Deploy from a branch**, branche **main**, dossier **/(root)**.
+3. Le site sera publié sur <https://oc-rescue.github.io/>.
 
-## Modèles pris en charge
+### Mise à jour automatique d’OCLP
 
-- MacBookPro9,1
-- MacBookPro9,2
-- MacBookPro10,1
-- MacBookPro10,2
+Le workflow `.github/workflows/update-oclp-catalog.yml` vérifie chaque jour la dernière publication officielle d’OCLP. Lorsqu’une version change, il actualise automatiquement :
 
-Projet indépendant, non affilié à Apple ni à Dortania. Licence GPL-3.0.
+- la version et l’adresse du paquet officiel ;
+- son empreinte SHA-256 publiée par GitHub ;
+- tous les modèles de `SupportedSMBIOS` ;
+- les noms commerciaux issus de `smbios_data.py`.
+
+Dans **Settings → Actions → General → Workflow permissions**, sélectionnez **Read and write permissions**, puis enregistrez. Le workflow peut aussi être lancé manuellement dans l’onglet **Actions**.
+
+Le script de récupération télécharge ce petit catalogue avant de travailler. Si le catalogue est momentanément indisponible ou invalide, il revient aux données sûres intégrées et n’exécute jamais un paquet sans empreinte SHA-256 valide.
+
+## English
+
+Static GitHub Pages site for preparing an OpenCore rescue EFI drive from Safari in macOS Recovery.
+
+### Publishing
+
+1. Upload **all contents** of this folder to the root of `oc-rescue/oc-rescue.github.io`.
+2. Under **Settings → Pages**, choose **Deploy from a branch**, branch **main**, folder **/(root)**.
+3. The site will be published at <https://oc-rescue.github.io/>.
+
+### Automatic OCLP updates
+
+The `.github/workflows/update-oclp-catalog.yml` workflow checks the latest official OCLP release every day. It automatically updates the official package URL, its GitHub-published SHA-256 digest, every `SupportedSMBIOS` model and the marketing names from `smbios_data.py`.
+
+Under **Settings → Actions → General → Workflow permissions**, select **Read and write permissions** and save. The workflow can also be started manually from the **Actions** tab.
+
+The rescue script reads this small catalog before doing any work. If it is unavailable or invalid, the script safely falls back to its bundled release data and never runs a package without a valid SHA-256 digest.
+
+## Safety
+
+- External physical drives only.
+- Explicit drive identifier plus a second erase confirmation.
+- Official OCLP package and SHA-256 verification.
+- OpenCore is written to the USB EFI System Partition.
+- The internal drive is never selected automatically.
+
+Independent project, not affiliated with Apple or Dortania. GPL-3.0.
