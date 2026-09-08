@@ -1,14 +1,14 @@
 window.OCRESCUE_CATALOG = {
   "schema": 1,
   "source": "https://github.com/dortania/OpenCore-Legacy-Patcher",
-  "source_tag": "2.4.1",
-  "published_at": "2025-09-01T18:04:40Z",
+  "source_tag": "2.5.0",
+  "published_at": "2026-09-08T05:35:54Z",
   "release": {
-    "version": "2.4.1",
-    "url": "https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.4.1",
-    "package_url": "https://github.com/dortania/OpenCore-Legacy-Patcher/releases/download/2.4.1/OpenCore-Patcher.pkg",
-    "sha256": "a8c0732c197b49337d2b8b970ce57f5151495a2dac300e1f93e802a0261e188d",
-    "package_size": 735976622
+    "version": "2.5.0",
+    "url": "https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.5.0",
+    "package_url": "https://github.com/dortania/OpenCore-Legacy-Patcher/releases/download/2.5.0/OpenCore-Patcher.pkg",
+    "sha256": "6924eadf46860377cfc8b792c3ae0a88c396b7bb897ba014467966d150de1952",
+    "package_size": 738124232
   },
   "models": [
     {
